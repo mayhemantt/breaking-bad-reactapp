@@ -1,0 +1,70 @@
+.card {
+  background-color: #fff;
+  margin: 50px auto;
+  min-width: 380px;
+  max-width: 380px;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 10px 10px 30px #bdbdbd;
+  transition: all 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: scale(1.1);
+  box-shadow: 10px 10px 50px #000;
+}
+.card__image {
+  border-radius: 10px 10px 0 0;
+  overflow: hidden;
+  max-height: 310px;
+}
+
+.card__image img {
+  width: 100%;
+  height: 100%;
+}
+img:before {
+  content: ' ';
+  display: block;
+  /* position: absolute; */
+  width: 100rem;
+  height: 100rem;
+  background-image: url('https://flxt.tmsimg.com/assets/p185846_b_v8_ad.jpg');
+}
+
+.card__copy {
+  padding: 20px;
+}
+
+.card__status {
+  position: absolute;
+  color: #ffffff;
+  padding: 3px 4px 3px 4px;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 700;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+.card__nickname {
+  position: absolute;
+  color: #ffffff;
+  padding: 3px 4px 3px 4px;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 700;
+  right: 0;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+.card__occupation {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.card__occupation p {
+  font-size: 20px;
+}
