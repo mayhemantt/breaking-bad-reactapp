@@ -1,13 +1,13 @@
 .wrapper {
-  width: 100%;
+  margin-top: 20px;
   width: 100%;
   height: auto;
   min-height: 100vh;
   padding: 50px 20px;
   padding-top: 100px;
+  /* background-image: linear-gradient(-20deg, #484646 0%, #43404d 100%); */
   display: flex;
-  background-image: linear-gradient(-20deg, #484646 0%, #43404d 100%);
-  display: flex;
+  /* background-color: red; */
   background-image: linear-gradient(-20deg, #484646 0%, #43404d 100%);
 }
 

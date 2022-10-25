@@ -8,39 +8,46 @@ import { NavBar } from '../../components/nav/navbar';
 export const HomeScreen = () => {
   const [charData, setCharData] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [hasMore, setHasMore] = React.useState(true);
 
-  const [limit, setLimit] = React.useState(6);
+  const [page, setPage] = React.useState(0);
 
-  const infiniteScroll = () => {
-    if (
-      window.innerHeight + document.documentElement.scrollTop ===
-      document.documentElement.offsetHeight
-    ) {
+  const observer = React.useRef();
+  const lastCharRef = React.useCallback(
+    (node) => {
+      console.log('here---');
       if (isLoading) return;
-      setIsLoading(true);
-      let pageVal = limit;
-      pageVal = pageVal + 6;
-      setLimit(pageVal);
-    }
-  };
 
-  React.useEffect(() => {
-    window.addEventListener('scroll', () => {
-      infiniteScroll();
-    });
-  });
+      if (observer.current) observer.current.disconnect();
 
-  React.useEffect(() => {
-    setIsLoading(true);
-    getAllCharacters(limit)
-      .then((res) => {
-        setCharData(res);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        setIsLoading(false);
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          setPage((p) => p + 6);
+        }
       });
-  }, [limit]);
+      if (node) observer.current.observe(node);
+    },
+    [isLoading, hasMore]
+  );
+
+  console.log('Hoiii----');
+
+  React.useEffect(() => {
+    if (!isLoading && hasMore) {
+      setIsLoading(true);
+      getAllCharacters(page)
+        .then((res) => {
+          if (res.length == 0) {
+            setHasMore(false);
+          }
+          setCharData((prev) => [...prev, ...res]);
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          setIsLoading(false);
+        });
+    }
+  }, [page]);
 
   return (
     <>
@@ -50,7 +57,19 @@ export const HomeScreen = () => {
           charData &&
           charData.length > 0 &&
           charData.map((e, i) => {
-            return <CharacterCard e={e} key={i} />;
+            if (charData.length === i + 1) {
+              return (
+                <div className="card" ref={lastCharRef} key={i}>
+                  <CharacterCard e={e} />
+                </div>
+              );
+            } else {
+              return (
+                <div className="card" key={i}>
+                  <CharacterCard e={e} />
+                </div>
+              );
+            }
           })}
       </div>
       <div
@@ -64,3 +83,13 @@ export const HomeScreen = () => {
     </>
   );
 };
+
+// return (
+//   <div>
+//     {charData &&
+//       charData.length > 0 &&
+//       charData.map((e, i) => {
+//         return <div key={i}>{e.name}</div>;
+//       })}
+//   </div>
+// );
