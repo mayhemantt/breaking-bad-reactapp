@@ -23,10 +23,9 @@
   width: 100%;
   height: 100%;
 }
-img:before {
+.card__image img:before {
   content: ' ';
   display: block;
-  /* position: absolute; */
   width: 100rem;
   height: 100rem;
   background-image: url('https://flxt.tmsimg.com/assets/p185846_b_v8_ad.jpg');

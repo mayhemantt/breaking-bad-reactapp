@@ -8,7 +8,6 @@ html {
   background-color: #f8f8f8;
 }
 body {
-  /* padding: 2rem 0.5rem; */
   font-family: 'Raleway', Sans-serif;
   /* color: #32325d; */
   -webkit-font-smoothing: antialiased;
@@ -16,11 +15,7 @@ body {
   text-rendering: optimizeLegibility;
   margin: 0;
 }
-@media (min-width: 40rem) {
-  body {
-    /* padding: 1rem; */
-  }
-}
+
 .container {
   display: flex;
   -webkit-display: box;

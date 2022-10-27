@@ -5,6 +5,7 @@ import { getQuoteByAuthor } from '../../actions/getQuoteByAuthor';
 import './character.css';
 import { Loader } from '../../components/loader/loader';
 import { NavBar } from '../../components/nav/navbar';
+import { analytics, logEvent } from '../../firebase';
 
 export const CharacterScreen = () => {
   const { id } = useParams();
@@ -25,6 +26,14 @@ export const CharacterScreen = () => {
         setLoadingQuote(false);
       });
     });
+
+    try {
+      logEvent(analytics, 'character', {
+        id,
+      });
+    } catch (err) {
+      console.log(err);
+    }
   }, []);
 
   return (
@@ -32,7 +41,7 @@ export const CharacterScreen = () => {
       <NavBar />
       {!loadingChar && charData && (
         <div className="wrapper">
-          <div className="profile-card js-profile-card">
+          <div className="profile-card">
             <div className="profile-card__img">
               <img
                 src={charData.img}
@@ -44,8 +53,7 @@ export const CharacterScreen = () => {
                 }}
               />
             </div>
-
-            <div className="profile-card__cnt js-profile-cnt">
+            <div className="profile-card__cnt">
               <div className="profile-card__name">{charData.name}</div>
               <div className="profile-card__txt">
                 Nickname <strong>{charData.nickname}</strong>
@@ -54,6 +62,16 @@ export const CharacterScreen = () => {
                 <span className="profile-card-loc__txt">
                   Birthday: {charData.birthday || ' Who Knows? '}
                 </span>
+              </div>
+
+              <div className="profile-card_occupation">
+                <span className="profile-card-loc">Occupations</span>
+                {charData.occupation.map((e, i) => {
+                  return <div key={i}>{e}</div>;
+                })}
+              </div>
+              <div className="profile-card_occupation">
+                Portrayed By: {charData.portrayed}
               </div>
               <div className="profile-card-inf__item">
                 <div className="profile-card-inf__title">
